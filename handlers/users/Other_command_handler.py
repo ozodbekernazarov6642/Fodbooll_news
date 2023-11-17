@@ -7,12 +7,14 @@ from keyboards.inline.admin_confirmation_ads import confirmation_send_button
 from utils.bot_date_since import days_since
 from loader import dp, db, bot
 from states.main_menu_state import Main_State, Tournament_state, Complaints
+from states.Admin_state import admin_state
 
 
 @dp.message_handler(commands=['statistics'])
 @dp.message_handler(commands=['statistics'], state=Main_State.all_states)
 @dp.message_handler(commands=['statistics'], state=Tournament_state.all_states)
 @dp.message_handler(commands=['statistics'], state=Complaints.all_states)
+@dp.message_handler(commands=['statistics'], state=admin_state.all_states)
 async def bot_statistics(message: types.Message):
     # Botning barcha foydalanuvchilar soni
     all_user = db.select_all_user()
@@ -54,6 +56,7 @@ async def bot_statistics(message: types.Message):
 @dp.message_handler(commands=['complaints'], state=Main_State.all_states)
 @dp.message_handler(commands=['complaints'], state=Tournament_state.all_states)
 @dp.message_handler(commands=['complaints'], state=Complaints.all_states)
+@dp.message_handler(commands=['complaints'], state=admin_state.all_states)
 async def send_complaints(message: types.Message):
     await message.answer("<b>Taklif va shikoyatlaringizni yozing ✍🏻</b>\n\n"
                          "<i>Eslatma:</i> <b>Taklif va shikoyatlar matndan iborat bo'lishi shart!</b>",
