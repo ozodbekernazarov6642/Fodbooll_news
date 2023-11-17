@@ -1,3 +1,5 @@
+import time
+
 from aiogram import types
 
 from data.config import GROUP
@@ -66,3 +68,6 @@ async def send_group(message: types.Message):
     await bot.send_message(chat_id=GROUP[0],
                            text=f"<b>Foydalanuvchi:</b>{message.from_user.get_mention(as_html=True)}\n\n"
                                 f"<i>{text}</i>")
+    xabar = await message.answer("<b>Qo'llab-Quvvatlash gruhiga jo'natildi📤</b>")
+    time.sleep(3)
+    await xabar.delete()
