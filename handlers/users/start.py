@@ -12,7 +12,7 @@ from loader import dp, db, bot
 @dp.message_handler(CommandStart())
 @dp.message_handler(CommandStart(), state=Main_State.all_states)
 @dp.message_handler(CommandStart(), state=Tournament_state.all_states)
-@dp.message_handler(CommandStart(), state=Complaints.all_states)
+@dp.message_handler(CommandStart(), state=Complaints.send_group)
 async def bot_start(message: types.Message, state: FSMContext):
     existing_user = db.select_user(message.from_user.id)
     if not existing_user:

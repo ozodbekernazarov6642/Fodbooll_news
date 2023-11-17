@@ -15,4 +15,3 @@ class Tournament_state(StatesGroup):
 
 class Complaints(StatesGroup):
     send_group = State()
-    confirmation= State()
