@@ -77,5 +77,6 @@ async def send_group(message: types.Message, state:FSMContext):
     xabar = await message.answer("<b>Qo'llab-Quvvatlash gruhiga jo'natildi📤</b>", reply_markup=admin_main_button)
     await state.finish()
     time.sleep(3)
+
     await xabar.delete()
 
