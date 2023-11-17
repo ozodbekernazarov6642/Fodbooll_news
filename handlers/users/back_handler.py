@@ -71,9 +71,4 @@ async def live_back(call: types.CallbackQuery, state: FSMContext):
     await Tournament_state.liga.set()
 
 
-@dp.callback_query_handler(text="con:back", state=Complaints.confirmation)
-async def message_back(call: types.CallbackQuery):
-    await call.message.answer("<b>Taklif va shikoyatlaringizni yozing ✍🏻</b>\n\n"
-                              "<i>Eslatma:</i> <b>Taklif va shikoyatlar matndan iborat bo'lishi shart!</b>")
-    await call.message.delete()
-    await Complaints.send_group.set()
+
