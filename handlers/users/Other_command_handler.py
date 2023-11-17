@@ -60,7 +60,7 @@ async def bot_statistics(message: types.Message, state: FSMContext):
 @dp.message_handler(commands=['complaints'], state=Tournament_state.all_states)
 @dp.message_handler(commands=['complaints'], state=Complaints.all_states)
 @dp.message_handler(commands=['complaints'], state=admin_state.all_states)
-async def send_complaints(message: types.Message, state:FSMContext):
+async def send_complaints(message: types.Message, state: FSMContext):
     await message.answer("<b>Taklif va shikoyatlaringizni yozing ✍🏻</b>\n\n"
                          "<i>Eslatma:</i> <b>Taklif va shikoyatlar matndan iborat bo'lishi shart!</b>",
                          disable_web_page_preview=True, reply_markup=ReplyKeyboardRemove())
@@ -68,12 +68,11 @@ async def send_complaints(message: types.Message, state:FSMContext):
 
 
 @dp.message_handler(state=Complaints.send_group)
-async def send_group(message: types.Message, state:FSMContext):
-    await message.delete()
+async def send_group(message: types.Message, state: FSMContext):
     await bot.forward_message(chat_id=GROUP[0], from_chat_id=message.chat.id, message_id=message.message_id)
+    await message.delete()
     xabar = await message.answer("<b>Qo'llab-Quvvatlash gruhiga jo'natildi📤</b>", reply_markup=admin_main_button)
     await state.finish()
     time.sleep(3)
 
     await xabar.delete()
-
