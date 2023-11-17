@@ -57,7 +57,7 @@ async def live_match():
             f'{boshlanish_vaqt.strip()}\n'
             f'🔰{gruhlar[-1].strip()} - {hisob_str.split("-")[1]}\n'
             f'__________________________________________________')
-    live.append('BOT linki')
+    live.append("<i>Bu Men:</i>👉<a href='https://t.me/varfootballbot'>VarFootball</a>")
     live_1 = '\n\n'.join(live)
     return live_1
 

@@ -11,7 +11,6 @@ from loader import dp, db
 async def send_live(call: types.CallbackQuery):
     await call.message.delete()
     emoji = await call.message.answer_sticker(sticker=InputFile(path_or_bytesio='data/emoji/AnimatedSticker.tgs'))
-    await call.message.answer(await live_match(), reply_markup=back)
+    await call.message.answer(await live_match(), reply_markup=back, disable_web_page_preview=True)
     await emoji.delete()
     await Main_State.match_center.set()
-

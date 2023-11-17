@@ -43,8 +43,9 @@ async def bot_statistics(message: types.Message):
     await message.answer(f"🔰<b>Botdagi obunachilar</b> - <i>{all_user_count} ta</i>\n\n"
                          f"👉<b>Faol obunachilar soni</b> - <i>{action_all_user} ta</i>\n\n"
                          f"👉<b>Oxirgi 24 soatda qo'shilganlar soni</b> - <i>{last_24_count} ta</i>\n\n"
-                         f"👉<b>Oxirgi 1 oyda qo'shilganlar soni</b> - <i>{last_24_count} ta</i>\n\n"
-                         f"👉<b>Bot ishga tushganiga</b> - <i>{days} kun bo'ldi</i>\n\n")
+                         f"👉<b>Oxirgi 1 oyda qo'shilganlar soni</b> - <i>{last_month_count} ta</i>\n\n"
+                         f"👉<b>Bot ishga tushganiga</b> - <i>{days} kun bo'ldi</i>\n\n"
+                         f"📈 | <a href='https://t.me/varfootballbot'>VarFootball</a>")
 
 
 @dp.message_handler(commands=['complaints'])
@@ -53,7 +54,8 @@ async def bot_statistics(message: types.Message):
 @dp.message_handler(commands=['complaints'], state=Complaints.all_states)
 async def send_complaints(message: types.Message):
     await message.answer("<b>Taklif va shikoyatlaringizni yozing ✍🏻</b>\n\n"
-                         "<i>Eslatma:</i> <b>Taklif va shikoyatlar matndan iborat bo'lishi shart!</b>")
+                         "<i>Eslatma:</i> <b>Taklif va shikoyatlar matndan iborat bo'lishi shart!</b>",
+                         disable_web_page_preview=True)
     await Complaints.send_group.set()
 
 
@@ -64,4 +66,3 @@ async def send_group(message: types.Message):
     await bot.send_message(chat_id=GROUP[0],
                            text=f"<b>Foydalanuvchi:</b>{message.from_user.get_mention(as_html=True)}\n\n"
                                 f"<i>{text}</i>")
-    await Complaints.confirmation.set()

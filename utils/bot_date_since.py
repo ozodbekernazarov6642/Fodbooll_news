@@ -4,7 +4,7 @@ import pytz
 
 async def days_since():
     # Kiritilgan sana malumotini datetime objektiga o'tkazamiz
-    input_date_str = "3.11.2023"
+    input_date_str = "17.11.2023"
     input_date = datetime.strptime(input_date_str, "%d.%m.%Y")
 
     # Ayni damdagi sana (bu joyda Asia/Tashkent vaqt zonasi)
