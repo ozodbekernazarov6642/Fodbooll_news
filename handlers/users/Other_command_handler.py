@@ -1,6 +1,7 @@
 import time
 
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 
 from data.config import GROUP
 from keyboards.inline.admin_confirmation_ads import confirmation_send_button
@@ -15,7 +16,7 @@ from states.Admin_state import admin_state
 @dp.message_handler(commands=['statistics'], state=Tournament_state.all_states)
 @dp.message_handler(commands=['statistics'], state=Complaints.all_states)
 @dp.message_handler(commands=['statistics'], state=admin_state.all_states)
-async def bot_statistics(message: types.Message):
+async def bot_statistics(message: types.Message, state: FSMContext):
     # Botning barcha foydalanuvchilar soni
     all_user = db.select_all_user()
     all_user_count = 0
@@ -50,6 +51,7 @@ async def bot_statistics(message: types.Message):
                          f"👉<b>Oxirgi 1 oyda qo'shilganlar soni</b> - <i>{last_month_count} ta</i>\n\n"
                          f"👉<b>Bot ishga tushganiga</b> - <i>{days} kun bo'ldi</i>\n\n"
                          f"📈 | <a href='https://t.me/varfootballbot'>VarFootball</a>")
+    await state.finish()
 
 
 @dp.message_handler(commands=['complaints'])
@@ -57,7 +59,7 @@ async def bot_statistics(message: types.Message):
 @dp.message_handler(commands=['complaints'], state=Tournament_state.all_states)
 @dp.message_handler(commands=['complaints'], state=Complaints.all_states)
 @dp.message_handler(commands=['complaints'], state=admin_state.all_states)
-async def send_complaints(message: types.Message):
+async def send_complaints(message: types.Message, state:FSMContext):
     await message.answer("<b>Taklif va shikoyatlaringizni yozing ✍🏻</b>\n\n"
                          "<i>Eslatma:</i> <b>Taklif va shikoyatlar matndan iborat bo'lishi shart!</b>",
                          disable_web_page_preview=True)
@@ -65,12 +67,14 @@ async def send_complaints(message: types.Message):
 
 
 @dp.message_handler(state=Complaints.send_group)
-async def send_group(message: types.Message):
+async def send_group(message: types.Message, state:FSMContext):
     text = message.text
     await message.delete()
     await bot.send_message(chat_id=GROUP[0],
                            text=f"<b>Foydalanuvchi:</b>{message.from_user.get_mention(as_html=True)}\n\n"
                                 f"<i>{text}</i>")
     xabar = await message.answer("<b>Qo'llab-Quvvatlash gruhiga jo'natildi📤</b>")
+    await state.finish()
     time.sleep(3)
     await xabar.delete()
+
