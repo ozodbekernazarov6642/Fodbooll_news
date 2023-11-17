@@ -4,9 +4,20 @@ import pytz
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.builtin import CommandStart
+
+from data.config import ADMINS
+from keyboards.default.admin_button import admin_main_button
 from keyboards.default.main_menu_button import main_keyboard
+from states.Admin_state import admin_state
 from states.main_menu_state import Main_State, Tournament_state, Complaints
 from loader import dp, db, bot
+
+
+@dp.message_handler(CommandStart(), user_id=ADMINS)
+@dp.message_handler(CommandStart(), state=admin_state.all_states, user_id=ADMINS)
+@dp.message_handler(CommandStart(), state=Complaints.all_states, user_id=ADMINS)
+async def start_admin(message: types.Message):
+    await message.answer("Assalomu aleykum xurmatli Admin !", reply_markup=admin_main_button)
 
 
 @dp.message_handler(CommandStart())

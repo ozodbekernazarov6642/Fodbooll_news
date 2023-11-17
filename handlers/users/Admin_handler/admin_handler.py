@@ -1,5 +1,5 @@
 import time
-
+from aiogram.types import ReplyKeyboardRemove
 from aiogram.types import InputFile
 from openpyxl import Workbook
 from aiogram import types
@@ -17,16 +17,13 @@ workbook = Workbook()
 user_info = workbook.active
 
 
-@dp.message_handler(CommandStart(), user_id=ADMINS)
-@dp.message_handler(CommandStart(), state=admin_state.all_states, user_id=ADMINS)
-async def start_admin(message: types.Message):
-    await message.answer("Assalomu aleykum xurmatli Admin !", reply_markup=admin_main_button)
+
 
 
 @dp.message_handler(text="Foydalanuvchilarga Xabar yuborish📤", user_id=ADMINS, state=admin_state.all_states)
 @dp.message_handler(text="Foydalanuvchilarga Xabar yuborish📤", user_id=ADMINS)
 async def all_user_send_input(message: types.Message, state: FSMContext):
-    await message.answer("<b>Xabar matnini kiriting✍🏻</b>")
+    await message.answer("<b>Xabar matnini kiriting✍🏻</b>", reply_markup=ReplyKeyboardRemove())
     await message.delete()
     await admin_state.ads.set()
 
@@ -47,13 +44,14 @@ async def all_user_send_output(message: types.Message, state: FSMContext):
         await message.send_copy(chat_id=i)
     await message.delete()
     xabar = await message.answer("<i>Xabar Foydalanuvchilarga yuborildi📤</i>")
+    await state.finish()
     time.sleep(3)
     await xabar.delete()
 
 
 @dp.message_handler(text='🆔Foydalanuvchilarning ID ni olish', user_id=ADMINS)
 @dp.message_handler(text='🆔Foydalanuvchilarning ID ni olish', state=admin_state.all_states, user_id=ADMINS)
-async def ads_button_admin(message: types.Message):
+async def ads_button_admin(message: types.Message, state: FSMContext):
     all_user = db.select_all_user()
     for z in range(0, len(all_user)):
         user_info[f"A1"] = "Id"
@@ -72,3 +70,4 @@ async def ads_button_admin(message: types.Message):
 
     workbook.save("user_info.xlsx")
     await message.answer_document(InputFile(path_or_bytesio="user_info.xlsx"))
+    await state.finish()

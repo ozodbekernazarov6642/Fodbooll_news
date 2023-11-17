@@ -2,6 +2,7 @@ import time
 
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from aiogram.types import ReplyKeyboardRemove
 
 from data.config import GROUP
 from keyboards.inline.admin_confirmation_ads import confirmation_send_button
@@ -62,7 +63,7 @@ async def bot_statistics(message: types.Message, state: FSMContext):
 async def send_complaints(message: types.Message, state:FSMContext):
     await message.answer("<b>Taklif va shikoyatlaringizni yozing ✍🏻</b>\n\n"
                          "<i>Eslatma:</i> <b>Taklif va shikoyatlar matndan iborat bo'lishi shart!</b>",
-                         disable_web_page_preview=True)
+                         disable_web_page_preview=True, reply_markup=ReplyKeyboardRemove())
     await Complaints.send_group.set()
 
 
