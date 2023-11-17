@@ -7,12 +7,12 @@
 # # .env fayl ichidan quyidagilarni o'qiymiz
 # BOT_TOKEN = env.str("BOT_TOKEN")  # Bot toekn
 # ADMINS = env.list("ADMINS")  # adminlar ro'yxati
-# GROUP = ["@gfgfsdfw"]
+# GROUP = [-1002038324590]
 # IP = env.str("ip")  # Xosting ip manzili
-#
+
 import os
 
 # .env fayl ichidan quyidagilarni o'qiymiz
 BOT_TOKEN = str(os.environ.get("BOT_TOKEN"))  # Bot token
 ADMINS = [1004403881, 5474825034]  # adminlar ro'yxati
-GROUP = ["@varfootballsupportgroup"]
+GROUP = [-1002038324590]

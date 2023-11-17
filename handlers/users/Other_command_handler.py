@@ -69,11 +69,8 @@ async def send_complaints(message: types.Message, state:FSMContext):
 
 @dp.message_handler(state=Complaints.send_group)
 async def send_group(message: types.Message, state:FSMContext):
-    text = message.text
     await message.delete()
-    await bot.send_message(chat_id=GROUP[0],
-                           text=f"<b>Foydalanuvchi:</b>{message.from_user.get_mention(as_html=True)}\n\n"
-                                f"<i>{text}</i>")
+    await bot.forward_message(chat_id=GROUP[0], from_chat_id=message.chat.id, message_id=message.message_id)
     xabar = await message.answer("<b>Qo'llab-Quvvatlash gruhiga jo'natildi📤</b>", reply_markup=admin_main_button)
     await state.finish()
     time.sleep(3)
