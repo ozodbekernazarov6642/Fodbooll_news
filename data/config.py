@@ -9,7 +9,7 @@
 # ADMINS = env.list("ADMINS")  # adminlar ro'yxati
 # GROUP = ["@gfgfsdfw"]
 # IP = env.str("ip")  # Xosting ip manzili
-# #
+#
 import os
 
 # .env fayl ichidan quyidagilarni o'qiymiz

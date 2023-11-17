@@ -3,7 +3,7 @@ import time
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardRemove
-
+from keyboards.default.admin_button import admin_main_button
 from data.config import GROUP
 from keyboards.inline.admin_confirmation_ads import confirmation_send_button
 from utils.bot_date_since import days_since
@@ -74,7 +74,7 @@ async def send_group(message: types.Message, state:FSMContext):
     await bot.send_message(chat_id=GROUP[0],
                            text=f"<b>Foydalanuvchi:</b>{message.from_user.get_mention(as_html=True)}\n\n"
                                 f"<i>{text}</i>")
-    xabar = await message.answer("<b>Qo'llab-Quvvatlash gruhiga jo'natildi📤</b>")
+    xabar = await message.answer("<b>Qo'llab-Quvvatlash gruhiga jo'natildi📤</b>", reply_markup=admin_main_button)
     await state.finish()
     time.sleep(3)
     await xabar.delete()
