@@ -17,9 +17,6 @@ workbook = Workbook()
 user_info = workbook.active
 
 
-
-
-
 @dp.message_handler(text="Foydalanuvchilarga Xabar yuborish📤", user_id=ADMINS, state=admin_state.all_states)
 @dp.message_handler(text="Foydalanuvchilarga Xabar yuborish📤", user_id=ADMINS)
 async def all_user_send_input(message: types.Message, state: FSMContext):
@@ -50,7 +47,6 @@ async def all_user_send_output(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(text='🆔Foydalanuvchilarning ID ni olish', user_id=ADMINS)
-@dp.message_handler(text='🆔Foydalanuvchilarning ID ni olish', state=admin_state.all_states, user_id=ADMINS)
 async def ads_button_admin(message: types.Message, state: FSMContext):
     all_user = db.select_all_user()
     for z in range(0, len(all_user)):

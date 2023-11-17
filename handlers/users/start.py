@@ -16,8 +16,9 @@ from loader import dp, db, bot
 @dp.message_handler(CommandStart(), user_id=ADMINS)
 @dp.message_handler(CommandStart(), state=admin_state.all_states, user_id=ADMINS)
 @dp.message_handler(CommandStart(), state=Complaints.all_states, user_id=ADMINS)
-async def start_admin(message: types.Message):
+async def start_admin(message: types.Message, state: FSMContext):
     await message.answer("Assalomu aleykum xurmatli Admin !", reply_markup=admin_main_button)
+    await state.finish()
 
 
 @dp.message_handler(CommandStart())
