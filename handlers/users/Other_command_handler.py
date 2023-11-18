@@ -1,5 +1,5 @@
 import time
-
+from keyboards.default.main_menu_button import main_keyboard
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardRemove
@@ -71,8 +71,9 @@ async def send_complaints(message: types.Message, state: FSMContext):
 async def send_group(message: types.Message, state: FSMContext):
     await bot.forward_message(chat_id=GROUP[0], from_chat_id=message.chat.id, message_id=message.message_id)
     await message.delete()
-    xabar = await message.answer("<b>Qo'llab-Quvvatlash gruhiga jo'natildi📤</b>", reply_markup=admin_main_button)
+    xabar = await message.answer("<b>Qo'llab-Quvvatlash gruhiga jo'natildi📤</b>")
     await state.finish()
     time.sleep(3)
-
     await xabar.delete()
+    await message.answer("<b>Asosiy Menyuni birini tanlang👇</b>", reply_markup=main_keyboard)
+

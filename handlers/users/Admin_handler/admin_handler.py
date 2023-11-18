@@ -7,14 +7,26 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import CommandStart
 from aiogram.utils.exceptions import CantParseEntities, BadRequest
 
-from data.config import ADMINS
+from data.config import ADMINS, GROUP
 from keyboards.default.admin_button import admin_main_button
 from keyboards.inline.admin_confirmation_ads import confirmation_send_button
 from loader import dp, bot, db
 from states.Admin_state import admin_state
+from states.main_menu_state import Complaints
 
 workbook = Workbook()
 user_info = workbook.active
+
+
+@dp.message_handler(state=Complaints.send_group, user_id=ADMINS)
+async def send_group(message: types.Message, state: FSMContext):
+    await bot.forward_message(chat_id=GROUP[0], from_chat_id=message.chat.id, message_id=message.message_id)
+    await message.delete()
+    xabar = await message.answer("<b>Qo'llab-Quvvatlash gruhiga jo'natildi📤</b>")
+    await state.finish()
+    time.sleep(3)
+    await xabar.delete()
+    await message.answer("<b>Menyulardan birini tanlang👇</b>", reply_markup=admin_main_button)
 
 
 @dp.message_handler(text="Foydalanuvchilarga Xabar yuborish📤", user_id=ADMINS, state=admin_state.all_states)
@@ -44,6 +56,7 @@ async def all_user_send_output(message: types.Message, state: FSMContext):
     await state.finish()
     time.sleep(3)
     await xabar.delete()
+    await message.answer("<b>Menyulardan birini tanlang👇</b>", reply_markup=admin_main_button)
 
 
 @dp.message_handler(text='🆔Foydalanuvchilarning ID ni olish', user_id=ADMINS)
