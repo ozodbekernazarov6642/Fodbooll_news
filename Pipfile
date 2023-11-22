@@ -9,7 +9,6 @@ environs = "*"
 beautifulsoup4 = "*"
 requests = "*"
 openpyxl = "*"
-pytz = "*"
 [dev-packages]
 
 [requires]
