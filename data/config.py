@@ -14,5 +14,5 @@ import os
 
 # .env fayl ichidan quyidagilarni o'qiymiz
 BOT_TOKEN = str(os.environ.get("BOT_TOKEN"))  # Bot token
-ADMINS = [1004403881, 5474825034]  # adminlar ro'yxati
+ADMINS = list(os.environ.get("ADMINS"))  # adminlar ro'yxati
 GROUP = [-1002038324590]
