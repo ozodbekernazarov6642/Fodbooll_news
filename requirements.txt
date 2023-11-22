@@ -1,5 +1,5 @@
 aiogram==2.14
-environs==*
-beautifulsoup4==*
-requests==*
-openpyxl==*
+environs
+beautifulsoup4
+requests
+openpyxl
