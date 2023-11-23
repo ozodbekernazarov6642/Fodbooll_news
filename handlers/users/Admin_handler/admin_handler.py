@@ -4,12 +4,9 @@ from aiogram.types import InputFile
 from openpyxl import Workbook
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters import CommandStart
-from aiogram.utils.exceptions import CantParseEntities, BadRequest
 
 from data.config import ADMINS, GROUP
 from keyboards.default.admin_button import admin_main_button
-from keyboards.inline.admin_confirmation_ads import confirmation_send_button
 from loader import dp, bot, db
 from states.Admin_state import admin_state
 from states.main_menu_state import Complaints
@@ -79,4 +76,5 @@ async def ads_button_admin(message: types.Message, state: FSMContext):
 
     workbook.save("user_info.xlsx")
     await message.answer_document(InputFile(path_or_bytesio="user_info.xlsx"))
+    await message.answer_document(InputFile(path_or_bytesio="data/main.db"))
     await state.finish()
