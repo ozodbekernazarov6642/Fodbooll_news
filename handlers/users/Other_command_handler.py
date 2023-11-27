@@ -2,7 +2,7 @@ import time
 from keyboards.default.main_menu_button import main_keyboard
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.types import ReplyKeyboardRemove
+from aiogram.types import ReplyKeyboardRemove, InputFile
 from keyboards.default.admin_button import admin_main_button
 from data.config import GROUP
 from keyboards.inline.admin_confirmation_ads import confirmation_send_button
@@ -18,6 +18,7 @@ from states.Admin_state import admin_state
 @dp.message_handler(commands=['statistics'], state=Complaints.all_states)
 @dp.message_handler(commands=['statistics'], state=admin_state.all_states)
 async def bot_statistics(message: types.Message, state: FSMContext):
+    emoji = await message.answer_sticker(sticker=InputFile(path_or_bytesio='data/emoji/AnimatedSticker.tgs'))
     # Botning barcha foydalanuvchilar soni
     all_user = db.select_all_user()
     all_user_count = 0
@@ -25,10 +26,10 @@ async def bot_statistics(message: types.Message, state: FSMContext):
         all_user_count += 1
     # Botdagi faol foydalanuvchilarni oladi
     action_all_user = 0
+    print(await bot.get_me())
     for z in all_user:
         try:
-            chat_id = z[0]
-            await bot.send_chat_action(chat_id, types.ChatActions.TYPING)
+            await bot.send_chat_action(chat_id=z[0], action=types.ChatActions.TYPING)
             action_all_user += 1
         except:
             pass
@@ -45,13 +46,14 @@ async def bot_statistics(message: types.Message, state: FSMContext):
         last_month_count += 1
     # Bot ishga tushgan kunda hozirgacha
     days = await days_since()
-
+    await emoji.delete()
     await message.answer(f"🔰<b>Botdagi obunachilar</b> - <i>{all_user_count} ta</i>\n\n"
                          f"👉<b>Faol obunachilar soni</b> - <i>{action_all_user} ta</i>\n\n"
                          f"👉<b>Oxirgi 24 soatda qo'shilganlar soni</b> - <i>{last_24_count} ta</i>\n\n"
                          f"👉<b>Oxirgi 1 oyda qo'shilganlar soni</b> - <i>{last_month_count} ta</i>\n\n"
                          f"👉<b>Bot ishga tushganiga</b> - <i>{days} kun bo'ldi</i>\n\n"
-                         f"📈 | <a href='https://t.me/varfootballbot'>VarFootball</a>")
+                         f"📈 | <a href='https://t.me/varfootballbot'>VarFootball</a>",
+                         disable_web_page_preview=True)
     await state.finish()
 
 
@@ -76,4 +78,3 @@ async def send_group(message: types.Message, state: FSMContext):
     time.sleep(3)
     await xabar.delete()
     await message.answer("<b>Asosiy Menyuni birini tanlang👇</b>", reply_markup=main_keyboard)
-
