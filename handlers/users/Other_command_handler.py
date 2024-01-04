@@ -24,16 +24,7 @@ async def bot_statistics(message: types.Message, state: FSMContext):
     all_user_count = 0
     for o in all_user:
         all_user_count += 1
-    # Botdagi faol foydalanuvchilarni oladi
-    action_all_user = 0
-    print(await bot.get_me())
-    for z in all_user:
-        try:
-            await bot.send_chat_action(chat_id=z[0], action=types.ChatActions.TYPING)
-            action_all_user += 1
-        except:
-            pass
-
+        
     # Oxirgi 24 soatda qo'shilgan foydalanuvchilar
     last_24 = db.get_last_24_hours_users()
     last_24_count = 0
@@ -48,7 +39,6 @@ async def bot_statistics(message: types.Message, state: FSMContext):
     days = await days_since()
     await emoji.delete()
     await message.answer(f"🔰<b>Botdagi obunachilar</b> - <i>{all_user_count} ta</i>\n\n"
-                         f"👉<b>Faol obunachilar soni</b> - <i>{action_all_user} ta</i>\n\n"
                          f"👉<b>Oxirgi 24 soatda qo'shilganlar soni</b> - <i>{last_24_count} ta</i>\n\n"
                          f"👉<b>Oxirgi 1 oyda qo'shilganlar soni</b> - <i>{last_month_count} ta</i>\n\n"
                          f"👉<b>Bot ishga tushganiga</b> - <i>{days} kun bo'ldi</i>\n\n"
